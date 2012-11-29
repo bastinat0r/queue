@@ -20,15 +20,17 @@ var statusstring = "idle";
 function updateStatus(newStatus) {
 	if(newStatus)
 		statusstring = newStatus;
+	var json = JSON.stringify({"status" : statusstring, "id" : id});
+	config.opts.headers = {"content-length" : json.length};
 	var req = http.request(config.opts, function(res) {
 		res.on('data', function(data){
 			util.puts(data);
 		});
 		res.on('end', function() {
-			util.puts("res:end");
-		})
+			/* gj */
+		});
 	});
-	req.end(JSON.stringify({"status" : statusstring, "id" : id}));
+	req.end(json);
 	req.on('error', util.puts);
 	if(statusstring === "idle")
 		getJob();

@@ -17,7 +17,9 @@ var srv = http.createServer(function(req,res) {
 			res.end();
 			client = JSON.parse(data);
 			clients[""+client.id] = client["status"];
-			util.puts(JSON.stringify(clients));
+			for(var i in clients) {
+				util.puts(JSON.stringify(clients[i]));
+			}
 		}
 	});
 });
